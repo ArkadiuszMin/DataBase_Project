@@ -1,0 +1,10 @@
+.wrapper{
+    height: 90vh;
+    background-image: "homeBackgournd";
+}
+.center{
+    transform: translate(0%, 20%);
+}
+.title{
+    font-size: 52px;
+}

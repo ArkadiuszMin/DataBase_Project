@@ -1,0 +1,28 @@
+.myContainer{
+    height: calc(100vh - 70px - 40px);
+    margin: 20px;
+    /* background-color: yellow; */
+    border: 1px solid lightgrey;
+    display: flex;
+    font-family: Helvetica Neue";
+}
+.aside{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* background-color: red; */
+    border-right: 1px solid lightgrey;
+}
+.button{
+    height: 70px;
+    background-color: white;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    font-size: 20px;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+.active{
+    background-color: rgb(69, 147, 241);
+    color: white
+}

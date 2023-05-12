@@ -1,0 +1,19 @@
+.wrapper{
+    height: 90vh;
+    background-image: "homeBackgournd";
+}
+.home{
+    transform: translate(0%, 30%);
+}
+.title{
+    font-size: 52px;
+}
+.subtitle{
+    font-size: 34px;
+}
+.myButton {
+    margin-top: 40px !important;
+    border-radius: 20px !important;
+    padding: 18px !important;
+    font-size: 1.8rem !important;
+}
