@@ -1,5 +1,7 @@
 package com.example.springapi.api.model;
 
+import com.example.springapi.api.enums.Sex;
+import com.example.springapi.api.enums.State;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,15 +14,15 @@ public class Dog {
     private String id;
     private String name;
     private int weight;
-    private String sex;
+    private Sex sex;
     private int age;
     private String description;
     private String imgSrc;
-    private String state;
+    private State state;
 
     private Shelter shelter;
 
-    public Dog(String name, int weight, String sex, int age, String description, String imgSrc, String state, Shelter shelter) {
+    public Dog(String name, int weight, Sex sex, int age, String description, String imgSrc, State state, Shelter shelter) {
         this.name = name;
         this.weight = weight;
         this.sex = sex;

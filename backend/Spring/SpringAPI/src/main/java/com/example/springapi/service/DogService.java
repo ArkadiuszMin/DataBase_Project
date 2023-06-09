@@ -2,6 +2,7 @@ package com.example.springapi.service;
 
 import com.example.springapi.api.JsonObjects.AddDogFormat;
 import com.example.springapi.api.JsonObjects.UpdateShelterFormat;
+import com.example.springapi.api.enums.State;
 import com.example.springapi.api.model.Dog;
 import com.example.springapi.api.model.Shelter;
 import com.example.springapi.api.repository.DogRepository;
@@ -35,12 +36,7 @@ public class DogService {
     public ResponseEntity<Dog> getDogById(String id){
 
         Optional<Dog> dog =  dogRepository.findDogById(id);
-        if(dog.isPresent()){
-            return new ResponseEntity<>(dog.get(), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return dog.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<String> updateDogsShelter(UpdateShelterFormat updateShelterFormat){
@@ -81,7 +77,7 @@ public class DogService {
                             dogFormat.getAge(),
                             dogFormat.getDescription(),
                             dogFormat.getImgSrc(),
-                            "N",
+                            State.NIEZAREZERWOWANY,
                             shelter.get());
             dogRepository.insert(dog);
             return new ResponseEntity<>("Succesfully added a dog to database", HttpStatus.CREATED);
