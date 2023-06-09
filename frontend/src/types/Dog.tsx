@@ -5,7 +5,7 @@ type Dog = {
   age: number;
   desciription: string;
   imgSrc: string;
-  shelterId: string;
+  shelter: Shelter;
   id: string;
   description: string;
 };

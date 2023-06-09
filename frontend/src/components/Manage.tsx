@@ -1,6 +1,6 @@
 import { Component, useState } from "react";
 import "./Manage.Module.css";
-import AddForm from "./AddForm";
+import AddDogForm from "./AddDogForm";
 
 type Tab = {
   name: string;
@@ -13,36 +13,15 @@ const ManagePage = () => {
   const tabs: Tab[] = [
     {
       name: "dodaj psa",
-      component: (
-        <AddForm
-          user={undefined}
-          onSave={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      ),
+      component: <AddDogForm />,
     },
     {
       name: "adopterzy",
-      component: (
-        <AddForm
-          user={undefined}
-          onSave={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      ),
+      component: <AddDogForm />,
     },
     {
       name: "rezerwacje",
-      component: (
-        <AddForm
-          user={undefined}
-          onSave={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      ),
+      component: <AddDogForm />,
     },
   ];
 
@@ -65,44 +44,16 @@ const ManagePage = () => {
             </button>
           ))}
         </div>
-        {/* <div className="row border">
-          <div className="col-md-auto nav-aside p-0">
-            <div className="list-group nav-aside p-0 m-0">
-              {tabs.map((tab, index) => (
-                <button
-                  type="button"
-                  className={
-                    activeTab === tab.name
-                      ? "active list-group-item list-group-item-action"
-                      : "list-group-item list-group-item-action"
-                  }
-                  aria-current="true"
-                  onClick={() => {
-                    setActiveTab(tab.name);
-                    console.log(activeTab);
-                  }}
-                  key={index}
-                >
-                  {tab.name}
-                </button>
-              ))}
-              <button
-                className="list-group-item placeholder"
-                aria-current="true"
-              ></button>
+        <div className="component-box">
+          {tabs.map((tab) => (
+            <div
+              className={activeTab === tab.name ? "d-block" : "d-none"}
+              key={tab.name}
+            >
+              {tab.component}
             </div>
-          </div>
-          <div className="col component-container">
-            {tabs.map((tab) => (
-              <div
-                className={activeTab === tab.name ? "d-block" : "d-none"}
-                key={tab.name}
-              >
-                {tab.component}
-              </div>
-            ))}
-          </div>
-        </div> */}
+          ))}
+        </div>
       </div>
     </>
   );

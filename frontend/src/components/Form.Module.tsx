@@ -1,75 +1,38 @@
-import { useForm, useController } from "react-hook-form";
-import Select from "react-select";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
 
-// required by default if not -> .optional()
+import "./ReservationForm.Module.css";
+
 const schema = z.object({
-  firstname: string().min(3),
-  lastname: string().min(3),
-  email: string().email(),
-  phone: string().length(9),
-  city: string().min(3),
-  postalCode: string(),
-  street: string().min(3),
+  firstname: string().min(3, "zbyt krótkie imię"),
+  lastname: string().min(3, "zbyt krótkie nazwisko"),
+  email: string().email("błędny email"),
+  phone: string().length(9, "błędna długość"),
+  city: string().min(3, "zbyt krótka nazwa miasta"),
+  postalCode: string().min(1, "błędny kod"),
+  street: string().min(3, "zbyt krótka nazwa ulicy"),
 });
 
-// .email() htmlFor email validation
-
-interface Props {
-  user: any;
-  onSave: (values: any) => void;
-}
-
-const From = ({ onSave, user = {} }: Props) => {
-  // const sexOptions = [
-  //   { value: "samiec", label: "samiec" },
-  //   { value: "samica", label: "samica" },
-  // ];
-
-  const { register, control, handleSubmit, formState } = useForm({
-    defaultValues: user,
+const From = () => {
+  const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(schema),
   });
 
-  //const { field } = useController({ name: "sex", control });
-
   const { errors } = formState;
 
-  // const handleSelectChange = (option: any) => {
-  //   field.onChange(option.value);
-  // };
-
+  //TODO: add to database or thow exception
   const handleSave = (formValues: any) => {
     console.log(formValues);
-    onSave(formValues);
+    // TODO: do something
   };
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit(handleSave)}>
-        <div>
-          <p>Name</p>
-          <input {...register("name")} />
-          <div className="error-message">{errors.name?.message?.toString()}</div>
-        </div>
-        <div>
-          <p>Sex</p>
-          <Select
-            value={sexOptions.find(({ value }) => value === field.value)}
-            onChange={handleSelectChange}
-            options={sexOptions}
-          />
-          <div className="error-message">{errors.sex?.message?.toString()}</div>
-        </div>
-        <div style={{ marginTop: "12px" }}>
-          <button type="submit">save</button>
-        </div>
-      </form> */}
-
-      {/* first row */}
       <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
         <h1 className="title">Formularz rezerwacji</h1>
+
+        {/* first row */}
         <div className="col-md-6">
           <label className="form-label">imię:</label>
           <input className="form-control" {...register("firstname")} />
@@ -90,7 +53,7 @@ const From = ({ onSave, user = {} }: Props) => {
         <div className="col-md-3">
           <label className="form-label">nr telefonu:</label>
           <div className="input-group">
-            <span className="input-group-text">icon</span>
+            <span className="input-group-text">☎️</span>
             <input className="form-control" {...register("phone")} />
           </div>
           <div className="error-message">
@@ -101,7 +64,7 @@ const From = ({ onSave, user = {} }: Props) => {
         <div className="col-md-9">
           <label className="form-label">email:</label>
           <div className="input-group">
-            <span className="input-group-text">@</span>
+            <span className="input-group-text">📪</span>
             <input className="form-control" {...register("email")} />
           </div>
           <div className="error-message">
@@ -139,6 +102,7 @@ const From = ({ onSave, user = {} }: Props) => {
             wyślij formularz rezerwacyjny
           </button>
         </div>
+
         <div className="position-absolute bottom-0 align-right">
           <p style={{ float: "right" }}>
             Tylko krok dzieli cię od powiększenia swojej rodziny!
