@@ -6,17 +6,6 @@ import "./Detail.Module.css";
 import PageNotFound from "./PageNotFound";
 import Form from "./ReservationForm";
 
-type Dog = {
-  name: string;
-  weight: number;
-  sex: "samiec" | "samiczka";
-  age: number;
-  description: string;
-  imgSrc: string;
-  shelterId: string;
-  id: string;
-};
-
 const AnimalDetails = () => {
   const { dogId } = useParams();
   console.log("id:" + dogId);

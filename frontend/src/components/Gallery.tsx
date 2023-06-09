@@ -3,20 +3,7 @@ import "./Gallery.Module.css";
 import axios from "axios";
 import AnimalCard from "./Card";
 
-type Dog = {
-  name: string;
-  weight: number;
-  sex: "samiec" | "samiczka";
-  age: number;
-  desciription: string;
-  imgSrc: string;
-  shelterId: string;
-  id: string;
-};
-
 const AnimalsGallery = () => {
-  // TODO: what if animals is empty?
-
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
