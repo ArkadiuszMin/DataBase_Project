@@ -18,11 +18,7 @@ const schema = z.object({
       message: "brak",
     }),
   desciription: string().optional(),
-  imgSrc: string()
-    .url("nieprawidłowy adres URL")
-    .refine((val) => val !== undefined && val !== "", {
-      message: "brak",
-    }),
+  imgSrc: string().url("nieprawidłowy adres URL"),
   shelterId: string().optional(),
 });
 
@@ -60,7 +56,7 @@ const AddDogFrom = () => {
           <label className="form-label">imię:</label>
           <input className="form-control" {...register("name")} />
           <div className="error-message">
-            {errors.firstname?.message?.toString()}
+            {errors.name?.message?.toString()}
           </div>
         </div>
 
@@ -97,13 +93,14 @@ const AddDogFrom = () => {
               type="number"
             />
           </div>
+          <div className="error-message">{errors.age?.message?.toString()}</div>
         </div>
 
         <div className="col-md-3">
           <label className="form-label">schronisko:</label>
           <input className="form-control" {...register("shelter")} />
           <div className="error-message">
-            {errors.street?.message?.toString()}
+            {errors.shelterId?.message?.toString()}
           </div>
         </div>
 
@@ -112,7 +109,7 @@ const AddDogFrom = () => {
           <label className="form-label">link do zdjęcia:</label>
           <input className="form-control" {...register("imgSrc")} />
           <div className="error-message">
-            {errors.city?.message?.toString()}
+            {errors.imgSrc?.message?.toString()}
           </div>
         </div>
 
@@ -124,9 +121,6 @@ const AddDogFrom = () => {
             {...register("description")}
             rows={3}
           />
-          <div className="error-message">
-            {errors.postalCode?.message?.toString()}
-          </div>
         </div>
 
         <label className="form-label">* - pole jest opcjonalne.</label>
