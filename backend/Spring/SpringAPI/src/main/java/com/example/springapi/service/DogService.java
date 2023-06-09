@@ -2,6 +2,7 @@ package com.example.springapi.service;
 
 import com.example.springapi.api.JsonObjects.AddDogFormat;
 import com.example.springapi.api.JsonObjects.UpdateShelterFormat;
+import com.example.springapi.api.enums.State;
 import com.example.springapi.api.model.Dog;
 import com.example.springapi.api.model.Shelter;
 import com.example.springapi.api.repository.DogRepository;
@@ -35,32 +36,39 @@ public class DogService {
     public ResponseEntity<Dog> getDogById(String id){
 
         Optional<Dog> dog =  dogRepository.findDogById(id);
-        if(dog.isPresent()){
-            return new ResponseEntity<>(dog.get(), HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
+        return dog.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<String> updateDogsShelter(UpdateShelterFormat updateShelterFormat){
-        String dogId = updateShelterFormat.getDogId();
-        String shelterId = updateShelterFormat.getShelterId();
-        if(shelterId == null || dogId == null){
-            return new ResponseEntity<>("Provide dogs ID and shelter ID", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> updateDog(AddDogFormat dogFormat){
+        if(dogFormat.getName() == null || dogFormat.getSex() == null
+                || dogFormat.getImgSrc() == null || dogFormat.getShelterId() == null || dogFormat.getDogId() == null){
+            return new ResponseEntity<>("You havent provided name, sex, image source or shelterId",
+                    HttpStatus.BAD_REQUEST);
         }
-        Optional<Dog> dog = dogRepository.findDogById(dogId);
+        if(dogFormat.getAge() == 0 || dogFormat.getWeight() == 0){
+            return new ResponseEntity<>("You havent provided age or weight, or chose it to be 0", HttpStatus.BAD_REQUEST);
+        }
+        Optional<Dog> dog = dogRepository.findDogById(dogFormat.getDogId());
         if(dog.isEmpty()){
             return new ResponseEntity<>("No dog with provided ID", HttpStatus.NOT_FOUND);
         }
-        Optional<Shelter> shelter = shelterRepository.findShelterById(shelterId);
+        Optional<Shelter> shelter = shelterRepository.findShelterById(dogFormat.getShelterId());
         if(shelter.isEmpty()){
             return new ResponseEntity<>("No shelter with provided ID", HttpStatus.NOT_FOUND);
         }
+
         Dog foundDog = dog.get();
+        foundDog.setName(dogFormat.getName());
+        foundDog.setSex(dogFormat.getSex());
+        foundDog.setImgSrc(dogFormat.getImgSrc());
         foundDog.setShelter(shelter.get());
+        foundDog.setAge(dogFormat.getAge());
+        foundDog.setWeight(dogFormat.getWeight());
+        foundDog.setDescription(dogFormat.getDescription());
+
         dogRepository.save(foundDog);
-        return new ResponseEntity<>("Shelter changed succesfully", HttpStatus.OK);
+
+        return new ResponseEntity<>("Dog updated succesfully", HttpStatus.OK);
     }
 
     public ResponseEntity<String> addDog(AddDogFormat dogFormat){
@@ -81,7 +89,7 @@ public class DogService {
                             dogFormat.getAge(),
                             dogFormat.getDescription(),
                             dogFormat.getImgSrc(),
-                            "N",
+                            State.NIEZAREZERWOWANY,
                             shelter.get());
             dogRepository.insert(dog);
             return new ResponseEntity<>("Succesfully added a dog to database", HttpStatus.CREATED);
