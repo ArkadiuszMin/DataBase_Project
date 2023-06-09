@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/shelters")
+@CrossOrigin("http://localhost:5173")
 public class ShelterController {
 
     private final ShelterService shelterService;

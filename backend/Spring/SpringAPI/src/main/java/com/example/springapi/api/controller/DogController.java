@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/dogs")
+@CrossOrigin("http://localhost:5173")
 public class DogController {
 
     private final DogService dogService;
@@ -45,10 +46,8 @@ public class DogController {
          return dogService.addDog(dogFormat);
     }
 
-    @PutMapping("/update/shelter")
-    public ResponseEntity<String> updateDogsShelter(@RequestBody UpdateShelterFormat updateShelterFormat){
-        return dogService.updateDogsShelter(updateShelterFormat);
-    }
+    @PutMapping("/update")
+    public ResponseEntity<String> updateDog(@RequestBody AddDogFormat dogFormat){ return dogService.updateDog(dogFormat);}
 
 
 }

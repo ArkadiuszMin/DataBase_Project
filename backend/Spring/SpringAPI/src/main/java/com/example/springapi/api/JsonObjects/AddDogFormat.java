@@ -12,4 +12,5 @@ public class AddDogFormat {
     private String description;
     private String imgSrc;
     private String shelterId;
+    private String dogId;
 }
