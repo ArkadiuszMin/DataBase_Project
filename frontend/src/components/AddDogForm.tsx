@@ -17,7 +17,7 @@ const schema = z.object({
     .refine((val) => val !== undefined && !isNaN(val), {
       message: "brak",
     }),
-  desciription: string().optional(),
+  description: string().optional(),
   imgSrc: string().url("nieprawidłowy adres URL"),
   shelterId: string().optional(),
 });
