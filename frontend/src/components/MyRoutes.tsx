@@ -13,7 +13,7 @@ const MyRoutes = () => {
         <Route path="/dogs" element={<AnimalsGallery />}></Route>
         <Route path="/details">
           <Route index element={<AnimalDetails />}></Route>
-          <Route path=":animalID" element={<AnimalDetails />}></Route>
+          <Route path=":dogId" element={<AnimalDetails />}></Route>
         </Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/manage" element={<Manage />}></Route>
