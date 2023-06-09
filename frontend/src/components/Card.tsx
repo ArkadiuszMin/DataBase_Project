@@ -1,27 +1,29 @@
 import "./Gallery.Module.css";
 
 interface Props {
-  animal: Animal;
+  dog: Dog;
 }
 
-const AnimalCard = ({ animal }: Props) => {
-  let route = "/details/" + animal.animalID.toString();
+const AnimalCard = ({ dog }: Props) => {
+  console.log("/details/" + dog.id);
+  let route = "/details/" + dog.id;
   return (
     <div className="col">
+      <p>DOG ID: {dog.id}</p>
       <div className="card myCard">
         <div className="image-container" style={{ backgroundColor: "black" }}>
           <a href={route}>
-            <img src={animal.imageSrc} alt="Your image description" />
+            <img src={dog.imgSrc} alt="Your image description" />
             <div className="image-text" style={{ color: "black" }}>
               Poznaj mnie!
             </div>
           </a>
         </div>
         <div className="card-body">
-          <h4 className="card-title">{animal.name}</h4>
-          <p className="card-text">🐕 {animal.breed ?? "kundelek"}</p>
+          <h4 className="card-title">{dog.name}</h4>
+          {/* <p className="card-text">🐕 {dog.breed ?? "kundelek"}</p> */}
           <p className="card-text">
-            🐾 {animal.age}lat, {animal.wage}kg, {animal.sex}
+            🐾 {dog.age}lat, {dog.weight}kg, {dog.sex}
           </p>
         </div>
       </div>

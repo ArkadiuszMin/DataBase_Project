@@ -26,3 +26,9 @@
     background-color: rgb(69, 147, 241);
     color: white
 }
+.component-box{
+    display: flex;
+    width: 100%;
+    padding: 50px;
+   
+}

@@ -13,6 +13,12 @@ p{
     padding: 18px !important;
     font-size: 1.8rem !important;
 }
+.myButton1{
+    margin-top: 0px !important;
+    border-radius: 20px !important;
+    padding: 18px !important;
+    font-size: 1.8rem !important;
+}
 .error-message{
     color: red;
 }
