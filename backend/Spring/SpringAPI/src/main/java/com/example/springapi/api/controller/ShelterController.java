@@ -28,7 +28,7 @@ public class ShelterController {
         return shelterService.getAllShelters();
     }
 
-    @GetMapping("/byid")
+    @GetMapping("/byId")
     public Shelter getShelterById(@RequestParam String id){
         Optional<Shelter> shelter = shelterService.getShelterById(id);
         return (Shelter) shelter.orElse(null);

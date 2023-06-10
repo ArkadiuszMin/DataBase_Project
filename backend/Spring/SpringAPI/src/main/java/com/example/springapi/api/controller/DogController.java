@@ -29,14 +29,14 @@ public class DogController {
         return dogService.getAllDogs();
     }
 
-    @GetMapping("/byname")
+    @GetMapping("/byName")
     public List<Dog> getDogByName(@RequestParam String name){
         List<Dog> dogs = dogService.getDogByName(name);
         System.out.println("Dog id: " + dogs.get(0).getId());
         return dogs;
     }
 
-    @GetMapping("/byid")
+    @GetMapping("/byId")
     public ResponseEntity<Dog> getDogById(@RequestParam String id){
         return dogService.getDogById(id);
     }

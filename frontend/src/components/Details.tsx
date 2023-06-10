@@ -14,7 +14,7 @@ const AnimalDetails = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/dogs/byid?id=" + dogId)
+      .get("http://localhost:8080/dogs/byId?id=" + dogId)
       .then((response) => {
         setDog(response.data);
       })

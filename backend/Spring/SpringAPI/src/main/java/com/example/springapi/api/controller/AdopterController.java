@@ -26,7 +26,7 @@ public class AdopterController {
     public List<Adopter> getAllAdopters(){
         return adopterService.getAllAdopters();
     }
-    @GetMapping("/byid")
+    @GetMapping("/byId")
     public Adopter getAdopterById(@RequestParam String id){
         Optional<Adopter> adopter = adopterService.getAdopterById(id);
         return adopter.orElse(null);

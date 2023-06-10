@@ -1,6 +1,7 @@
 package com.example.springapi.service;
 
 import com.example.springapi.api.JsonObjects.AddAdoptionFormat;
+import com.example.springapi.api.enums.State;
 import com.example.springapi.api.model.Adopter;
 import com.example.springapi.api.model.Adoption;
 import com.example.springapi.api.model.Dog;
@@ -44,9 +45,31 @@ public class AdoptionService {
         if(!dog.isPresent()){
             return new ResponseEntity<>("No dog with given id exists", HttpStatus.BAD_REQUEST);
         }
+        if(dog.get().getState()!=State.NIEZAREZERWOWANY){
+            return new ResponseEntity<>("Dog already reserved", HttpStatus.BAD_REQUEST);
+        }
+
         Adoption newAdoption = new Adoption(adopter.get(),dog.get());
         adoptionRepository.insert(newAdoption);
-        return new ResponseEntity<>("Successfully added new adoption",HttpStatus.CREATED);
+        dog.get().setState(State.ZAREZERWOWANY);
 
+        return new ResponseEntity<>("Successfully added new adoption",HttpStatus.CREATED);
+    }
+    public ResponseEntity<String> confirmAdoption(String adoptionId){
+        Optional<Adoption> adoption = adoptionRepository.findById(adoptionId);
+        if(!adoption.isPresent()){
+            return new ResponseEntity<>("No adoption with given id exists", HttpStatus.BAD_REQUEST);
+        }
+        if(adoption.get().getState() == State.ZAADOPTOWANY){
+            return new ResponseEntity<>("Dog already adopted", HttpStatus.BAD_REQUEST);
+        }
+
+        Dog dog = adoption.get().getDog();
+        adoption.get().setState(State.ZAADOPTOWANY);
+        dog.setState(State.ZAADOPTOWANY);
+        adoptionRepository.save(adoption.get());
+        dogRepository.save(dog);
+
+        return new ResponseEntity<>("Successfully updated adoption status", HttpStatus.OK);
     }
 }
