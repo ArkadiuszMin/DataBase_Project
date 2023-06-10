@@ -22,19 +22,19 @@ public class AdoptionController {
         this.adoptionService = adoptionService;
     }
 
-    @GetMapping("/bydogid")
-    public Adoption getAdoptionByDogId(@RequestParam String dogId){
-        Optional<Adoption> adoption = adoptionService.getAdoptionByDogId(dogId);
+    @GetMapping("/byDogId")
+    public Adoption getAdoptionByDogId(@RequestParam String id){
+        Optional<Adoption> adoption = adoptionService.getAdoptionByDogId(id);
         return  adoption.orElse(null);
     }
-    @GetMapping("/byadoptionid")
-    public Adoption getAdoptionByAdoptionId(@RequestParam String adoptionId){
-        Optional<Adoption> adoption = adoptionService.getAdoptionByAdoptionId(adoptionId);
+    @GetMapping("/byAdoptionId")
+    public Adoption getAdoptionByAdoptionId(@RequestParam String id){
+        Optional<Adoption> adoption = adoptionService.getAdoptionByAdoptionId(id);
         return  adoption.orElse(null);
     }
-    @GetMapping("/byadopterid")
-    public List<Adoption> getAdoptionByAdopterId(@RequestParam String adopterId){
-        return adoptionService.getAdoptionsByAdopterId(adopterId);
+    @GetMapping("/byAdopterId")
+    public List<Adoption> getAdoptionByAdopterId(@RequestParam String id){
+        return adoptionService.getAdoptionsByAdopterId(id);
     }
     @GetMapping("/all")
     public List<Adoption> getAllAdoptions(){
@@ -43,6 +43,10 @@ public class AdoptionController {
     @PostMapping("/add")
     public ResponseEntity<String> addAdoption(@RequestBody AddAdoptionFormat addAdoptionFormat){
         return adoptionService.addAdoption(addAdoptionFormat);
+    }
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmAdoption(@RequestParam String id){
+        return adoptionService.confirmAdoption(id);
     }
 
 }
