@@ -4,6 +4,7 @@ import { string, z } from "zod";
 
 import "./AddReservationForm.Module.css";
 import axios from "axios";
+import { useState } from "react";
 
 const schema = z.object({
   firstName: string().min(3, "zbyt krótkie imię"),
@@ -20,6 +21,8 @@ interface Props {
 }
 
 const From = ({ dogId }: Props) => {
+  const [dogReservationAddFailed, setDogReservationAddFailed] = useState(false);
+
   const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(schema),
   });
@@ -37,91 +40,95 @@ const From = ({ dogId }: Props) => {
       })
       .catch((error) => {
         console.error(error);
+        setDogReservationAddFailed(true);
       });
   };
 
   return (
     <>
-      <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
-        <h1 className="title">Formularz rezerwacji</h1>
+      {!dogReservationAddFailed && (
+        <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
+          <h1 className="title">Formularz rezerwacji</h1>
 
-        {/* first row */}
-        <div className="col-md-6">
-          <label className="form-label">imię:</label>
-          <input className="form-control" {...register("firstName")} />
-          <div className="error-message">
-            {errors.firstName?.message?.toString()}
+          {/* first row */}
+          <div className="col-md-6">
+            <label className="form-label">imię:</label>
+            <input className="form-control" {...register("firstName")} />
+            <div className="error-message">
+              {errors.firstName?.message?.toString()}
+            </div>
           </div>
-        </div>
 
-        <div className="col-md-6">
-          <label className="form-label">nazwisko:</label>
-          <input className="form-control" {...register("secondName")} />
-          <div className="error-message">
-            {errors.secondName?.message?.toString()}
+          <div className="col-md-6">
+            <label className="form-label">nazwisko:</label>
+            <input className="form-control" {...register("secondName")} />
+            <div className="error-message">
+              {errors.secondName?.message?.toString()}
+            </div>
           </div>
-        </div>
 
-        {/* second row */}
-        <div className="col-md-3">
-          <label className="form-label">nr telefonu:</label>
-          <div className="input-group">
-            <span className="input-group-text">☎️</span>
-            <input className="form-control" {...register("phone")} />
+          {/* second row */}
+          <div className="col-md-3">
+            <label className="form-label">nr telefonu:</label>
+            <div className="input-group">
+              <span className="input-group-text">☎️</span>
+              <input className="form-control" {...register("phone")} />
+            </div>
+            <div className="error-message">
+              {errors.phone?.message?.toString()}
+            </div>
           </div>
-          <div className="error-message">
-            {errors.phone?.message?.toString()}
-          </div>
-        </div>
 
-        <div className="col-md-9">
-          <label className="form-label">email:</label>
-          <div className="input-group">
-            <span className="input-group-text">📪</span>
-            <input className="form-control" {...register("email")} />
+          <div className="col-md-9">
+            <label className="form-label">email:</label>
+            <div className="input-group">
+              <span className="input-group-text">📪</span>
+              <input className="form-control" {...register("email")} />
+            </div>
+            <div className="error-message">
+              {errors.email?.message?.toString()}
+            </div>
           </div>
-          <div className="error-message">
-            {errors.email?.message?.toString()}
+
+          {/* third row */}
+          <div className="col-md-2">
+            <label className="form-label">kod pocztowy:</label>
+            <input className="form-control" {...register("postalCode")} />
+            <div className="error-message">
+              {errors.postalCode?.message?.toString()}
+            </div>
           </div>
-        </div>
 
-        {/* third row */}
-        <div className="col-md-2">
-          <label className="form-label">kod pocztowy:</label>
-          <input className="form-control" {...register("postalCode")} />
-          <div className="error-message">
-            {errors.postalCode?.message?.toString()}
+          <div className="col-md-4">
+            <label className="form-label">miasto:</label>
+            <input className="form-control" {...register("city")} />
+            <div className="error-message">
+              {errors.city?.message?.toString()}
+            </div>
           </div>
-        </div>
 
-        <div className="col-md-4">
-          <label className="form-label">miasto:</label>
-          <input className="form-control" {...register("city")} />
-          <div className="error-message">
-            {errors.city?.message?.toString()}
+          <div className="col-md-6">
+            <label className="form-label">ulica:</label>
+            <input className="form-control" {...register("street")} />
+            <div className="error-message">
+              {errors.street?.message?.toString()}
+            </div>
           </div>
-        </div>
 
-        <div className="col-md-6">
-          <label className="form-label">ulica:</label>
-          <input className="form-control" {...register("street")} />
-          <div className="error-message">
-            {errors.street?.message?.toString()}
+          <div className="col-12">
+            <button className="btn btn-secondary myButton" type="submit">
+              wyślij formularz rezerwacyjny
+            </button>
           </div>
-        </div>
 
-        <div className="col-12">
-          <button className="btn btn-secondary myButton" type="submit">
-            wyślij formularz rezerwacyjny
-          </button>
-        </div>
-
-        <div className="position-absolute bottom-0 align-right">
-          <p style={{ float: "right" }}>
-            Tylko krok dzieli cię od powiększenia swojej rodziny!
-          </p>
-        </div>
-      </form>
+          <div className="position-absolute bottom-0 align-right">
+            <p style={{ float: "right" }}>
+              Tylko krok dzieli cię od powiększenia swojej rodziny!
+            </p>
+          </div>
+        </form>
+      )}
+      {dogReservationAddFailed && <p> kotś zarezerwował już tego pierska</p>}
     </>
   );
 };
