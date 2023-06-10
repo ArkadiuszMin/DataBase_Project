@@ -3,6 +3,8 @@ import Select from "react-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
 import "./ReservationForm.Module.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const schema = z.object({
   name: string().min(3, "zbyt krótkie imię"),
@@ -19,7 +21,7 @@ const schema = z.object({
     }),
   description: string().optional(),
   imgSrc: string().url("nieprawidłowy adres URL"),
-  shelterId: string().optional(),
+  shelterId: string(),
 });
 
 const AddDogFrom = () => {
@@ -28,22 +30,59 @@ const AddDogFrom = () => {
     { value: "samica", label: "samica" },
   ];
 
+  const [shelterOptions, setShelterOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/shelters/all")
+      .then((response) => {
+        const options = response.data.map((shelter: Shelter) => ({
+          value: shelter.id,
+          label: shelter.name,
+        }));
+        setShelterOptions(options);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   const { register, control, handleSubmit, formState } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const { field } = useController({ name: "sex", control });
+  const { field: sexField } = useController({ name: "sex", control });
+  const { field: shelterIdField } = useController({
+    name: "shelterId",
+    control,
+  });
 
   const { errors } = formState;
 
-  const handleSelectChange = (option: any) => {
-    console.log("clicked");
-    field.onChange(option.value);
+  const handleSelectChange = (fieldName: string, option: any) => {
+    console.log("selected");
+    if (fieldName === "sex") {
+      console.log("sex");
+      sexField.onChange(option.value);
+    } else if (fieldName === "shelterId") {
+      console.log("shelter");
+      shelterIdField.onChange(option.value);
+    }
   };
 
   const handleSave = (formValues: any) => {
     console.log(formValues);
-    // TODO: do something
+
+    axios
+      .post("http://localhost:8080/dogs/add", formValues)
+      .then((response) => {
+        console.log("RESPONSE: " + response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -63,8 +102,8 @@ const AddDogFrom = () => {
         <div className="col-md-2">
           <label className="form-label">płeć:</label>
           <Select
-            value={sexOptions.find(({ value }) => value === field.value)}
-            onChange={handleSelectChange}
+            value={sexOptions.find(({ value }) => value === sexField.value)}
+            onChange={(option) => handleSelectChange("sex", option)}
             options={sexOptions}
           />
           <div className="error-message">{errors.sex?.message?.toString()}</div>
@@ -98,7 +137,13 @@ const AddDogFrom = () => {
 
         <div className="col-md-3">
           <label className="form-label">schronisko:</label>
-          <input className="form-control" {...register("shelter")} />
+          <Select
+            value={sexOptions.find(
+              ({ value }) => value === shelterIdField.value
+            )}
+            onChange={(option) => handleSelectChange("shelterId", option)}
+            options={shelterOptions}
+          />
           <div className="error-message">
             {errors.shelterId?.message?.toString()}
           </div>
@@ -136,5 +181,3 @@ const AddDogFrom = () => {
 };
 
 export default AddDogFrom;
-
-// TODO: sec required
