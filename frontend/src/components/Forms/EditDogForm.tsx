@@ -62,9 +62,9 @@ const EditDogForm = ({ dog }: Props) => {
     resolver: zodResolver(schema),
     defaultValues: {
       name: dog.name,
-      weight: dog.weight,
+      weight: dog.weight.toString(),
       sex: dog.sex,
-      age: dog.age,
+      age: dog.age.toString(),
       description: dog.description,
       imgSrc: dog.imgSrc,
       shelterId: dog.shelter.id,
@@ -91,10 +91,35 @@ const EditDogForm = ({ dog }: Props) => {
   };
 
   const handleSave = (formValues: any) => {
-    console.log(formValues);
+    formValues.id = dog.id;
+    formValues.status = dog.state;
+    formValues.shelter = dog.shelter;
+    //console.log(formValues);
+
+    console.log({
+      id: dog.id,
+      name: formValues.name,
+      weight: formValues.weight,
+      sex: formValues.sex,
+      age: formValues.sex,
+      description: formValues.description,
+      imgSrc: formValues.imgSrc,
+      state: dog.state,
+      shelter: dog.shelter,
+    });
 
     axios
-      .post("http://localhost:8080/dogs/editttt", formValues)
+      .post("http://localhost:8080/dogs/update", {
+        id: dog.id,
+        name: formValues.name,
+        weight: formValues.weight,
+        sex: formValues.sex,
+        age: formValues.sex,
+        description: formValues.description,
+        imgSrc: formValues.imgSrc,
+        state: dog.state,
+        shelter: dog.shelter,
+      })
       .then((response) => {
         console.log("RESPONSE: " + response.data);
       })

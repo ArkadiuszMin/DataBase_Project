@@ -5,7 +5,10 @@ type Dog = {
   age: number;
   desciription: string;
   imgSrc: string;
+  state: string;
   shelter: Shelter;
   id: string;
   description: string;
 };
+
+// TODO: state to enum
