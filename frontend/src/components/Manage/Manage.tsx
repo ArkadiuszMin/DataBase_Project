@@ -1,6 +1,10 @@
 import { Component, useState } from "react";
 import "./Manage.Module.css";
-import AddDogForm from "./AddDogForm";
+import AddDogForm from "../Forms/AddDogForm";
+import Adopters from "./Adopters";
+import Reservations from "./Reservations";
+import Adoptions from "./Adoptions";
+import EditDogs from "./EditDogs";
 
 type Tab = {
   name: string;
@@ -16,12 +20,20 @@ const ManagePage = () => {
       component: <AddDogForm />,
     },
     {
+      name: "edytuj psy",
+      component: <EditDogs />,
+    },
+    {
       name: "adopterzy",
-      component: <AddDogForm />,
+      component: <Adopters />,
+    },
+    {
+      name: "adopcje",
+      component: <Adoptions />,
     },
     {
       name: "rezerwacje",
-      component: <AddDogForm />,
+      component: <Reservations />,
     },
   ];
 

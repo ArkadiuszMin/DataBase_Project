@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import "./Detail.Module.css";
-import PageNotFound from "./PageNotFound";
-import Form from "./Form.Module";
+import PageNotFound from "../Pages/PageNotFound";
+import Form from "../Forms/AddReservationForm.Module";
 
 const AnimalDetails = () => {
   const { dogId } = useParams();
@@ -75,7 +75,7 @@ const AnimalDetails = () => {
                     </div>
                   </>
                 )}
-                {showReservationForm && <Form />}
+                {showReservationForm && dogId && <Form dogId={dogId} />}
               </div>
             </div>
           </div>

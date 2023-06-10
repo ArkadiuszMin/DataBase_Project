@@ -2,7 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
 
-import "./ReservationForm.Module.css";
+import "./AddReservationForm.Module.css";
+import axios from "axios";
 
 const schema = z.object({
   firstname: string().min(3, "zbyt krótkie imię"),
@@ -14,17 +15,30 @@ const schema = z.object({
   street: string().min(3, "zbyt krótka nazwa ulicy"),
 });
 
-const From = () => {
+interface Props {
+  dogId: string;
+}
+
+const From = ({ dogId }: Props) => {
   const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(schema),
   });
 
   const { errors } = formState;
 
-  //TODO: add to database or thow exception
   const handleSave = (formValues: any) => {
+    formValues.dogId = dogId;
+
     console.log(formValues);
-    // TODO: do something
+
+    // axios
+    //   .post("http://localhost:8080/adoptions/add", formValues)
+    //   .then((response) => {
+    //     console.log("RESPONSE: " + response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   };
 
   return (

@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AnimalsGallery from "./Gallery";
-import AnimalDetails from "./Details";
-import Home from "./Home";
-import Contact from "./Contact";
-import Manage from "./Manage";
+import AnimalsGallery from "./Gallery/Gallery";
+import AnimalDetails from "./Gallery/Details";
+import Home from "./Pages/Home";
+import Contact from "./Pages/Contact";
+import Manage from "./Manage/Manage";
 
 const MyRoutes = () => {
   return (
