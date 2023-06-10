@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "./Detail.Module.css";
 import PageNotFound from "./PageNotFound";
-import Form from "./Form.Module";
+import Form from "./AddReservationForm.Module";
 
 const AnimalDetails = () => {
   const { dogId } = useParams();
@@ -75,7 +75,7 @@ const AnimalDetails = () => {
                     </div>
                   </>
                 )}
-                {showReservationForm && <Form />}
+                {showReservationForm && dogId && <Form dogId={dogId} />}
               </div>
             </div>
           </div>

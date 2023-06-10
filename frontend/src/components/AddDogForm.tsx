@@ -2,7 +2,7 @@ import { useForm, useController } from "react-hook-form";
 import Select from "react-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
-import "./ReservationForm.Module.css";
+import "./AddReservationForm.Module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
