@@ -2,6 +2,9 @@ import { Component, useState } from "react";
 import "./Manage.Module.css";
 import AddDogForm from "../Forms/AddDogForm";
 import Adopters from "./Adopters";
+import Reservations from "./Reservations";
+import Adoptions from "./Adoptions";
+import EditDogs from "./EditDogs";
 
 type Tab = {
   name: string;
@@ -18,7 +21,7 @@ const ManagePage = () => {
     },
     {
       name: "edytuj psy",
-      component: <AddDogForm />,
+      component: <EditDogs />,
     },
     {
       name: "adopterzy",
@@ -26,11 +29,11 @@ const ManagePage = () => {
     },
     {
       name: "adopcje",
-      component: <AddDogForm />,
+      component: <Adoptions />,
     },
     {
       name: "rezerwacje",
-      component: <AddDogForm />,
+      component: <Reservations />,
     },
   ];
 
