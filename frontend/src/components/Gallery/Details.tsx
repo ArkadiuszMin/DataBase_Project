@@ -4,7 +4,7 @@ import axios from "axios";
 
 import "./Detail.Module.css";
 import PageNotFound from "../Pages/PageNotFound";
-import Form from "../Forms/AddReservationForm.Module";
+import Form from "../Forms/AddReservationForm";
 
 const AnimalDetails = () => {
   const { dogId } = useParams();
