@@ -31,10 +31,4 @@ public class AdopterController {
         Optional<Adopter> adopter = adopterService.getAdopterById(id);
         return adopter.orElse(null);
     }
-
-//    @PostMapping("/add")
-//    public ResponseEntity<String> addAdopter(@RequestBody AddAdopterFormat addAdopterFormat){
-//        return  adopterService.addAdopter((addAdopterFormat));
-//    }
-
 }
