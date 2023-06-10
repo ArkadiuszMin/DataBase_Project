@@ -28,17 +28,16 @@ const From = ({ dogId }: Props) => {
 
   const handleSave = (formValues: any) => {
     formValues.dogId = dogId;
-
     console.log(formValues);
 
-    // axios
-    //   .post("http://localhost:8080/adoptions/add", formValues)
-    //   .then((response) => {
-    //     console.log("RESPONSE: " + response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    axios
+      .post("http://localhost:8080/adoptions/add", formValues)
+      .then((response) => {
+        console.log("RESPONSE: " + response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
