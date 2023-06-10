@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import EditDogForm from "../Forms/EditDogForm";
 
 const EditDogs = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
+  const [dogToEdit, setDogToEdit] = useState<Dog>();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -20,12 +22,27 @@ const EditDogs = () => {
 
   return (
     <>
-      <h2>EditDogs:</h2>
-      {dogs.map((dog: Dog) => (
-        <p key={dog.id}>
-          {dog.name} {dog.id}
-        </p>
-      ))}
+      {!dogToEdit && (
+        <div>
+          <h2>EditDogs:</h2>
+          {dogs.map((dog: Dog) => (
+            <div key={dog.id}>
+              <p>
+                {dog.name} {dog.id}
+              </p>
+              <button
+                onClick={() => {
+                  console.log("clicked: " + dog.name);
+                  setDogToEdit(dog);
+                }}
+              >
+                edit
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+      {dogToEdit && <EditDogForm dog={dogToEdit} />}
     </>
   );
 };

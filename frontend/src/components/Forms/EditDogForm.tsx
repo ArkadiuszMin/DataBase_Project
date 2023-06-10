@@ -29,7 +29,16 @@ const schema = z.object({
   shelterId: string(),
 });
 
-const AddDogFrom = () => {
+interface Props {
+  dog: Dog;
+}
+
+const EditDogForm = ({ dog }: Props) => {
+  const sexOptions = [
+    { value: "samiec", label: "samiec" },
+    { value: "samica", label: "samica" },
+  ];
+
   const [shelterOptions, setShelterOptions] = useState<
     { value: string; label: string }[]
   >([]);
@@ -51,6 +60,15 @@ const AddDogFrom = () => {
 
   const { register, control, handleSubmit, formState } = useForm({
     resolver: zodResolver(schema),
+    defaultValues: {
+      name: dog.name,
+      weight: dog.weight,
+      sex: dog.sex,
+      age: dog.age,
+      description: dog.description,
+      imgSrc: dog.imgSrc,
+      shelterId: dog.shelter.id,
+    },
   });
 
   const { field: sexField } = useController({ name: "sex", control });
@@ -76,7 +94,7 @@ const AddDogFrom = () => {
     console.log(formValues);
 
     axios
-      .post("http://localhost:8080/dogs/add", formValues)
+      .post("http://localhost:8080/dogs/editttt", formValues)
       .then((response) => {
         console.log("RESPONSE: " + response.data);
       })
@@ -88,7 +106,8 @@ const AddDogFrom = () => {
   return (
     <>
       <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
-        <h1 className="title">Formularz dodania pieska</h1>
+        <h1 className="title">Formularz edycji psa {dog.name}</h1>
+        <label className="form-label">nadpisz poprzednie dane:</label>
 
         {/* first row */}
         <div className="col-md-3">
@@ -180,4 +199,4 @@ const AddDogFrom = () => {
   );
 };
 
-export default AddDogFrom;
+export default EditDogForm;
