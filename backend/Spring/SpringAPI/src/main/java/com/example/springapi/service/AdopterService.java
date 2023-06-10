@@ -24,25 +24,25 @@ public class AdopterService {
         return adopterRepository.findAdopterById(Id);
     }
 
-    public ResponseEntity<String> addAdopter(AddAdopterFormat adopter){
-        if(adopter.getFirstName() == null || adopter.getSecondName() == null){
-            return new ResponseEntity<>("No first name or second name provided", HttpStatus.BAD_REQUEST);
-        }
-        if(adopter.getPhone() == null || adopter.getEmail() == null){
-            return new ResponseEntity<>("No phone number or email provided", HttpStatus.BAD_REQUEST);
-        }
-        if(adopter.getCity() == null || adopter.getPostalCode() == null || adopter.getStreet() == null){
-            return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
-        }
-        Adopter newAdopter = new Adopter(
-                adopter.getFirstName(),
-                adopter.getSecondName(),
-                adopter.getPhone(),
-                adopter.getEmail(),
-                adopter.getStreet(),
-                adopter.getPostalCode(),
-                adopter.getCity());
-        adopterRepository.insert(newAdopter);
-        return new ResponseEntity<>("Successfully added new adopter",HttpStatus.CREATED);
-    }
+//    public ResponseEntity<String> addAdopter(AddAdopterFormat adopter){
+//        if(adopter.getFirstName() == null || adopter.getSecondName() == null){
+//            return new ResponseEntity<>("No first name or second name provided", HttpStatus.BAD_REQUEST);
+//        }
+//        if(adopter.getPhone() == null || adopter.getEmail() == null){
+//            return new ResponseEntity<>("No phone number or email provided", HttpStatus.BAD_REQUEST);
+//        }
+//        if(adopter.getCity() == null || adopter.getPostalCode() == null || adopter.getStreet() == null){
+//            return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
+//        }
+//        Adopter newAdopter = new Adopter(
+//                adopter.getFirstName(),
+//                adopter.getSecondName(),
+//                adopter.getPhone(),
+//                adopter.getEmail(),
+//                adopter.getStreet(),
+//                adopter.getPostalCode(),
+//                adopter.getCity());
+//        adopterRepository.insert(newAdopter);
+//        return new ResponseEntity<>("Successfully added new adopter",HttpStatus.CREATED);
+//    }
 }
