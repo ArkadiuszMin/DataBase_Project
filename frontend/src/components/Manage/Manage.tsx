@@ -12,7 +12,7 @@ type Tab = {
 };
 
 const ManagePage = () => {
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState("dodaj psa");
 
   const tabs: Tab[] = [
     {
