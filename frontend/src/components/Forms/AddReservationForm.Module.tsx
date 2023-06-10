@@ -6,8 +6,8 @@ import "./AddReservationForm.Module.css";
 import axios from "axios";
 
 const schema = z.object({
-  firstname: string().min(3, "zbyt krótkie imię"),
-  lastname: string().min(3, "zbyt krótkie nazwisko"),
+  firstName: string().min(3, "zbyt krótkie imię"),
+  secondName: string().min(3, "zbyt krótkie nazwisko"),
   email: string().email("błędny email"),
   phone: string().length(9, "błędna długość"),
   city: string().min(3, "zbyt krótka nazwa miasta"),
@@ -49,17 +49,17 @@ const From = ({ dogId }: Props) => {
         {/* first row */}
         <div className="col-md-6">
           <label className="form-label">imię:</label>
-          <input className="form-control" {...register("firstname")} />
+          <input className="form-control" {...register("firstName")} />
           <div className="error-message">
-            {errors.firstname?.message?.toString()}
+            {errors.firstName?.message?.toString()}
           </div>
         </div>
 
         <div className="col-md-6">
           <label className="form-label">nazwisko:</label>
-          <input className="form-control" {...register("lastname")} />
+          <input className="form-control" {...register("secondName")} />
           <div className="error-message">
-            {errors.lastname?.message?.toString()}
+            {errors.secondName?.message?.toString()}
           </div>
         </div>
 
