@@ -37,11 +37,11 @@ public class AdoptionService {
     }
     public ResponseEntity<String> addAdoption(AddAdoptionFormat adoption){
 
-        Optional<Dog> dog = dogRepository.findDogById(adoption.getDogId());
-        if(!dog.isPresent()){
+        Optional<Dog> _dog = dogRepository.findDogById(adoption.getDogId());
+        if(!_dog.isPresent()){
             return new ResponseEntity<>("No dog with given id exists", HttpStatus.BAD_REQUEST);
         }
-        if(dog.get().getState()!=State.NIEZAREZERWOWANY){
+        if(_dog.get().getState()!=State.NIEZAREZERWOWANY){
             return new ResponseEntity<>("Dog already reserved", HttpStatus.BAD_REQUEST);
         }
 
@@ -64,9 +64,11 @@ public class AdoptionService {
                 adoption.getCity());
         adopterRepository.insert(newAdopter);
 
-        Adoption newAdoption = new Adoption(newAdopter,dog.get());
+        Dog dog = _dog.get();
+        Adoption newAdoption = new Adoption(newAdopter,dog);
         adoptionRepository.insert(newAdoption);
-        dog.get().setState(State.ZAREZERWOWANY);
+        dog.setState(State.ZAREZERWOWANY);
+        dogRepository.save(dog);
 
         return new ResponseEntity<>("Successfully added new adoption",HttpStatus.CREATED);
     }
@@ -87,4 +89,8 @@ public class AdoptionService {
 
         return new ResponseEntity<>("Successfully updated adoption status", HttpStatus.OK);
     }
+    public List<Adoption> getAllToConfirm(){
+        return adoptionRepository.findAdoptionByState(State.ZAREZERWOWANY);
+    }
+
 }

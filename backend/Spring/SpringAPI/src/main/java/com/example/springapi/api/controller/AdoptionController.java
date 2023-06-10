@@ -48,5 +48,9 @@ public class AdoptionController {
     public ResponseEntity<String> confirmAdoption(@RequestParam String id){
         return adoptionService.confirmAdoption(id);
     }
+    @GetMapping("/toConfirm")
+    public List<Adoption> getAllToConfirm(){
+        return  adoptionService.getAllToConfirm();
+    }
 
 }
