@@ -36,12 +36,8 @@ public class AdoptionService {
         return adoptionRepository.findAll();
     }
     public ResponseEntity<String> addAdoption(AddAdoptionFormat adoption){
-        Optional<Adopter> adopter = adopterRepository.findAdopterById(adoption.getAdopterId());
-        Optional<Dog> dog = dogRepository.findDogById(adoption.getDogId());
 
-        if(!adopter.isPresent()){
-            return new ResponseEntity<>("No adopter with given id exists", HttpStatus.BAD_REQUEST);
-        }
+        Optional<Dog> dog = dogRepository.findDogById(adoption.getDogId());
         if(!dog.isPresent()){
             return new ResponseEntity<>("No dog with given id exists", HttpStatus.BAD_REQUEST);
         }
@@ -49,7 +45,26 @@ public class AdoptionService {
             return new ResponseEntity<>("Dog already reserved", HttpStatus.BAD_REQUEST);
         }
 
-        Adoption newAdoption = new Adoption(adopter.get(),dog.get());
+        if(adoption.getFirstName() == null || adoption.getSecondName() == null){
+            return new ResponseEntity<>("No first name or second name provided", HttpStatus.BAD_REQUEST);
+        }
+        if(adoption.getPhone() == null || adoption.getEmail() == null){
+            return new ResponseEntity<>("No phone number or email provided", HttpStatus.BAD_REQUEST);
+        }
+        if(adoption.getCity() == null || adoption.getPostalCode() == null || adoption.getStreet() == null){
+            return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
+        }
+        Adopter newAdopter = new Adopter(
+                adoption.getFirstName(),
+                adoption.getSecondName(),
+                adoption.getPhone(),
+                adoption.getEmail(),
+                adoption.getStreet(),
+                adoption.getPostalCode(),
+                adoption.getCity());
+        adopterRepository.insert(newAdopter);
+
+        Adoption newAdoption = new Adoption(newAdopter,dog.get());
         adoptionRepository.insert(newAdoption);
         dog.get().setState(State.ZAREZERWOWANY);
 

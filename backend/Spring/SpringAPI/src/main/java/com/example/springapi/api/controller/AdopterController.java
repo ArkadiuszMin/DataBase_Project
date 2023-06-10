@@ -32,9 +32,9 @@ public class AdopterController {
         return adopter.orElse(null);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addAdopter(@RequestBody AddAdopterFormat addAdopterFormat){
-        return  adopterService.addAdopter((addAdopterFormat));
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<String> addAdopter(@RequestBody AddAdopterFormat addAdopterFormat){
+//        return  adopterService.addAdopter((addAdopterFormat));
+//    }
 
 }
