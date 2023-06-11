@@ -1,7 +1,6 @@
 package com.example.springapi.api.controller;
 
 import com.example.springapi.api.JsonObjects.AddShelterFormat;
-import com.example.springapi.api.model.Address;
 import com.example.springapi.api.model.Shelter;
 import com.example.springapi.service.ShelterService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,12 +1,9 @@
 package com.example.springapi.api.controller;
 
-
-import com.example.springapi.api.JsonObjects.AddAdopterFormat;
 import com.example.springapi.api.model.Adopter;
 import com.example.springapi.service.AdopterService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

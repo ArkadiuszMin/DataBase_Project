@@ -2,6 +2,7 @@ package com.example.springapi.api.controller;
 
 
 import com.example.springapi.api.JsonObjects.AddAdoptionFormat;
+import com.example.springapi.api.JsonObjects.SheltersDataFormat;
 import com.example.springapi.api.model.Adoption;
 import com.example.springapi.service.AdoptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,10 @@ public class AdoptionController {
     @GetMapping("/toConfirm")
     public List<Adoption> getAllToConfirm(){
         return  adoptionService.getAllToConfirm();
+    }
+    @GetMapping("/data")
+    public SheltersDataFormat getShelterData(){
+        return adoptionService.getSheltersData();
     }
 
 }
