@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EditDogForm from "../Forms/EditDogForm";
 import "./EditDogs.Module.css";
+import PageLoading from "../Pages/PageLoading";
 
 const EditDogs = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
@@ -16,14 +17,12 @@ const EditDogs = () => {
       })
       .catch((error) => {
         console.error(error);
-        // Handle error, set dogs state to an empty array or display an error message
-        console.log("error!");
       });
   }, []);
 
   return (
     <>
-      {!dogToEdit && (
+      {isLoaded && !dogToEdit && (
         <>
           <h1 className="title title1">Edytuj psy:</h1>
           <div className="allPlace">
@@ -50,7 +49,8 @@ const EditDogs = () => {
           </div>
         </>
       )}
-      {dogToEdit && <EditDogForm dog={dogToEdit} />}
+      {isLoaded && dogToEdit && <EditDogForm dog={dogToEdit} />}
+      {!isLoaded && <PageLoading />}
     </>
   );
 };

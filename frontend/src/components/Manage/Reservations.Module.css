@@ -4,13 +4,12 @@ p{
 .title2{
     height: 12% !important;
 }
-.allPlace2{
-    height: 80%;
+.allPlace2{height: 80%;
     overflow: auto;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    align-content: flex-start
 }
 .myRow2{
     display: flex;

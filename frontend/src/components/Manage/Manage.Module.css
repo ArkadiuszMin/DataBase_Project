@@ -1,16 +1,13 @@
 .myContainer{
     height: calc(100vh - 70px - 40px);
     margin: 20px;
-    /* background-color: yellow; */
     border: 1px solid lightgrey;
     display: flex;
-    font-family: Helvetica Neue";
 }
 .aside{
     display: flex;
     flex-direction: column;
     width: 300px;
-    /* background-color: red; */
     border-right: 1px solid lightgrey;
 }
 .button{

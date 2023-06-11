@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./Reservations.Module.css";
 
 const Reservations = () => {
@@ -14,8 +14,6 @@ const Reservations = () => {
       })
       .catch((error) => {
         console.error(error);
-        // Handle error, set reservations state to an empty array or display an error message
-        console.log("error!");
       });
   }, []);
 
@@ -23,9 +21,6 @@ const Reservations = () => {
     axios
       .get("http://localhost:8080/adoptions/confirm?id=" + adoptionId)
       .then((response) => {
-        console.log("RESPONSE: " + response.data);
-
-        // Filter out the confirmed reservation from the reservations list
         setReservations((prevReservations) =>
           prevReservations.filter(
             (reservation) => reservation.adoptionId !== adoptionId
