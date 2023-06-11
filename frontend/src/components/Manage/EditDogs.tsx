@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import EditDogForm from "../Forms/EditDogForm";
+import "./EditDogs.Module.css";
 
 const EditDogs = () => {
   const [dogs, setDogs] = useState<Dog[]>([]);
@@ -23,24 +24,31 @@ const EditDogs = () => {
   return (
     <>
       {!dogToEdit && (
-        <div>
-          <h2>EditDogs:</h2>
-          {dogs.map((dog: Dog) => (
-            <div key={dog.id}>
-              <p>
-                {dog.name} {dog.id}
-              </p>
-              <button
-                onClick={() => {
-                  console.log("clicked: " + dog.name);
-                  setDogToEdit(dog);
-                }}
-              >
-                edit
-              </button>
-            </div>
-          ))}
-        </div>
+        <>
+          <h1 className="title title1">Edytuj psy:</h1>
+          <div className="allPlace">
+            {dogs.map((dog: Dog) => (
+              <div className="myRow" key={dog.id}>
+                <div className="wrapper1">
+                  <h1 className="name-and-id">
+                    {dog.name + " "}
+                    <small className="text-secondary faded-text name-and-id">
+                      /{dog.id}
+                    </small>
+                  </h1>
+                </div>
+                <button
+                  className="myButton1"
+                  onClick={() => {
+                    setDogToEdit(dog);
+                  }}
+                >
+                  edytuj
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
       )}
       {dogToEdit && <EditDogForm dog={dogToEdit} />}
     </>

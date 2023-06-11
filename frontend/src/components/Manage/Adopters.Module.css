@@ -1,0 +1,56 @@
+
+.title1{
+    height: 12% !important;
+}
+.allPlace1{
+    height: 78%;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.titleRow{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 40px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.8);
+    margin-bottom: 10px;
+}
+.titleRow p {
+    font-size: 20px;
+    text-align: center;
+}
+
+.myRow1{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 4px;
+    height: 50px;
+}
+
+.myRow1 p {
+    font-size: 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.id{
+    flex-basis: 20%;
+}
+.name-and-surname{
+    flex-basis: 20%;
+}
+.email{
+    flex-basis: 22%;
+}
+.phone{
+    flex-basis: 10%;
+}
+.address{
+    flex-basis: 25%;
+}
