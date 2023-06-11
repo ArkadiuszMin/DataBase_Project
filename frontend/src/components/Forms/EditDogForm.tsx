@@ -104,7 +104,7 @@ const EditDogForm = ({ dog, onClick }: Props) => {
     <>
       <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
         <h1 className="title">
-          {"edytuj psa " + dog.name + " "}
+          {"Edytuj psa " + dog.name + " "}
           <small className="text-secondary faded-text">/{dog.id}</small>
         </h1>
 
