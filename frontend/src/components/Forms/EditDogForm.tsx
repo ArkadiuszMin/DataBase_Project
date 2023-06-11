@@ -6,11 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { string, z } from "zod";
 
-const sexOptions = [
-  { value: "samiec", label: "samiec" },
-  { value: "samiczka", label: "samiczka" },
-];
-
 const schema = z.object({
   name: string().min(3, "zbyt krótkie imię"),
   weight: string()
