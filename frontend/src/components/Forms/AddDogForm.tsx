@@ -30,6 +30,9 @@ const schema = z.object({
 });
 
 const AddDogFrom = () => {
+  const [dogAddFailed, setDogAddFailed] = useState(false);
+  const [formSent, setFormSent] = useState(false);
+
   const [shelterOptions, setShelterOptions] = useState<
     { value: string; label: string }[]
   >([]);
@@ -62,12 +65,9 @@ const AddDogFrom = () => {
   const { errors } = formState;
 
   const handleSelectChange = (fieldName: string, option: any) => {
-    console.log("selected");
     if (fieldName === "sex") {
-      console.log("sex");
       sexField.onChange(option.value);
     } else if (fieldName === "shelterId") {
-      console.log("shelter");
       shelterIdField.onChange(option.value);
     }
   };
@@ -81,17 +81,18 @@ const AddDogFrom = () => {
     axios
       .post("http://localhost:8080/dogs/add", formValues)
       .then((response) => {
-        console.log("RESPONSE: " + response.data);
+        setFormSent(true);
       })
       .catch((error) => {
         console.error(error);
+        setDogAddFailed(true);
       });
   };
 
   return (
     <>
       <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
-        <h1 className="title">Formularz dodania pieska</h1>
+        <h1 className="title">Dodaj psa</h1>
 
         {/* first row */}
         <div className="col-md-3">
@@ -178,6 +179,16 @@ const AddDogFrom = () => {
             dodaj pieska
           </button>
         </div>
+
+        {dogAddFailed && (
+          <p style={{ color: "red" }}>
+            Błąd podczas dodawania psa - już istnieje w systemie.
+          </p>
+        )}
+
+        {!dogAddFailed && formSent && (
+          <p style={{ color: "green" }}>Pomyślnie dodano pieska.</p>
+        )}
       </form>
     </>
   );

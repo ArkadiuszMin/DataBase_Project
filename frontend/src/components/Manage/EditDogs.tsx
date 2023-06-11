@@ -9,6 +9,12 @@ const EditDogs = () => {
   const [dogToEdit, setDogToEdit] = useState<Dog>();
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const [goBackToChoice, setGoBackToChoice] = useState(true);
+
+  const handleClick = () => {
+    setGoBackToChoice(true);
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/dogs/all")
@@ -22,9 +28,9 @@ const EditDogs = () => {
 
   return (
     <>
-      {isLoaded && !dogToEdit && (
+      {isLoaded && goBackToChoice && (
         <>
-          <h1 className="title title1">Edytuj psy:</h1>
+          <h1 className="title title1">Edytuj psy</h1>
           <div className="allPlace">
             {dogs.map((dog: Dog) => (
               <div className="myRow" key={dog.id}>
@@ -40,6 +46,7 @@ const EditDogs = () => {
                   className="myButton1"
                   onClick={() => {
                     setDogToEdit(dog);
+                    setGoBackToChoice(false);
                   }}
                 >
                   edytuj
@@ -49,7 +56,9 @@ const EditDogs = () => {
           </div>
         </>
       )}
-      {isLoaded && dogToEdit && <EditDogForm dog={dogToEdit} />}
+      {isLoaded && !goBackToChoice && dogToEdit && (
+        <EditDogForm dog={dogToEdit} onClick={handleClick} />
+      )}
       {!isLoaded && <PageLoading />}
     </>
   );

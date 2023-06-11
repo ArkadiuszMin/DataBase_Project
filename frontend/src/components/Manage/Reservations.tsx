@@ -34,7 +34,7 @@ const Reservations = () => {
 
   return (
     <>
-      <h1 className="title title2">Rezerwacje:</h1>
+      <h1 className="title title2">Rezerwacje</h1>
       {reservations.length == 0 && <p>brak rezerwacji do potwierdzenia.</p>}
       {reservations.length != 0 && (
         <div className="titleRow2">

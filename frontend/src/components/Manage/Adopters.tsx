@@ -22,7 +22,7 @@ const Adopters = () => {
     <>
       {isLoaded && (
         <>
-          <h1 className="title title1">Adopterzy:</h1>
+          <h1 className="title title1">Adopterzy</h1>
           <div className="titleRow">
             <p className="rowItem id">id</p>
             <p className="rowItem name-and-surname">imię i nazwisko</p>
