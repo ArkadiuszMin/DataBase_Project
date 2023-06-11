@@ -91,35 +91,11 @@ const EditDogForm = ({ dog }: Props) => {
   };
 
   const handleSave = (formValues: any) => {
-    formValues.id = dog.id;
-    formValues.status = dog.state;
-    formValues.shelter = dog.shelter;
-    //console.log(formValues);
-
-    console.log({
-      id: dog.id,
-      name: formValues.name,
-      weight: formValues.weight,
-      sex: formValues.sex,
-      age: formValues.sex,
-      description: formValues.description,
-      imgSrc: formValues.imgSrc,
-      state: dog.state,
-      shelter: dog.shelter,
-    });
+    formValues.dogId = dog.id;
+    console.log(formValues);
 
     axios
-      .post("http://localhost:8080/dogs/update", {
-        id: dog.id,
-        name: formValues.name,
-        weight: formValues.weight,
-        sex: formValues.sex,
-        age: formValues.sex,
-        description: formValues.description,
-        imgSrc: formValues.imgSrc,
-        state: dog.state,
-        shelter: dog.shelter,
-      })
+      .put("http://localhost:8080/dogs/update", formValues)
       .then((response) => {
         console.log("RESPONSE: " + response.data);
       })
