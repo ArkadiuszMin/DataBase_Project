@@ -18,7 +18,7 @@ const AnimalDetails = () => {
       .get("http://localhost:8080/dogs/byId?id=" + dogId)
       .then((response) => {
         setDog(response.data), setIsLoaded(true);
-        console.log(response.data.description);
+        console.log(dog?.state);
       })
       .catch((error) => {
         console.error(error);
@@ -57,15 +57,28 @@ const AnimalDetails = () => {
                       <p>{dog.description}</p>
                     </div>
 
-                    <div className="position-absolute bottom-0">
-                      <button
-                        type="button"
-                        className="btn btn-secondary myButton"
-                        onClick={() => setResrvationForm(true)}
+                    {dog.state == "NIEZAREZERWOWANY" && (
+                      <div className="position-absolute bottom-0">
+                        <button
+                          type="button"
+                          className="btn btn-secondary myButton"
+                          onClick={() => setResrvationForm(true)}
+                        >
+                          wypełnij formularz adopcyjny!
+                        </button>
+                      </div>
+                    )}
+
+                    {(dog.state == "ZAADOPTOWANY" ||
+                      dog.state == "ZAREZERWOWANY") && (
+                      <p
+                        style={{ color: "red" }}
+                        className="position-absolute bottom-0"
                       >
-                        wypełnij formularz adopcyjny!
-                      </button>
-                    </div>
+                        Nie można dokonać rezerwacji pieska - jest zarezerwowany
+                        lub zaadoptowany.
+                      </p>
+                    )}
                   </>
                 )}
                 {showReservationForm && dogId && <Form dogId={dogId} />}
