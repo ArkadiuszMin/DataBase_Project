@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/adopters")
+@CrossOrigin("http://localhost:5173")
 public class AdopterController {
 
     private final AdopterService adopterService;
