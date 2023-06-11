@@ -9,12 +9,17 @@ import com.example.springapi.api.repository.AdopterRepository;
 import com.example.springapi.api.repository.AdoptionRepository;
 import com.example.springapi.api.repository.DogRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
 
 @AllArgsConstructor
 @Service
@@ -54,6 +59,7 @@ public class AdoptionService {
         if(adoption.getCity() == null || adoption.getPostalCode() == null || adoption.getStreet() == null){
             return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
         }
+
         Adopter newAdopter = new Adopter(
                 adoption.getFirstName(),
                 adoption.getSecondName(),
@@ -62,10 +68,25 @@ public class AdoptionService {
                 adoption.getStreet(),
                 adoption.getPostalCode(),
                 adoption.getCity());
-        adopterRepository.insert(newAdopter);
+
+        //check if adopter already exists
+        ExampleMatcher matcher = ExampleMatcher.matchingAll()
+                .withIgnoreNullValues()
+                .withIgnorePaths("_id");
+
+        Example<Adopter> example = Example.of(newAdopter, matcher);
+        Optional<Adopter> foundAdopter = adopterRepository.findOne(example);
+
+        Adopter adopter;
+        if(foundAdopter.isPresent()){
+            adopter = foundAdopter.get();
+        }else{
+            adopter = newAdopter;
+            adopterRepository.insert(adopter);
+        }
 
         Dog dog = _dog.get();
-        Adoption newAdoption = new Adoption(newAdopter,dog);
+        Adoption newAdoption = new Adoption(adopter,dog);
         adoptionRepository.insert(newAdoption);
         dog.setState(State.ZAREZERWOWANY);
         dogRepository.save(dog);
