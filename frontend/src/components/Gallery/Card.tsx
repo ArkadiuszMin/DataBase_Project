@@ -9,7 +9,6 @@ const AnimalCard = ({ dog }: Props) => {
   let route = "/details/" + dog.id;
   return (
     <div className="col">
-      <p>DOG ID: {dog.id}</p>
       <div className="card myCard">
         <div className="image-container" style={{ backgroundColor: "black" }}>
           <a href={route}>
@@ -21,10 +20,10 @@ const AnimalCard = ({ dog }: Props) => {
         </div>
         <div className="card-body">
           <h4 className="card-title">{dog.name}</h4>
-          {/* <p className="card-text">🐕 {dog.breed ?? "kundelek"}</p> */}
           <p className="card-text">
-            🐾 {dog.age}lat, {dog.weight}kg, {dog.sex}, {dog.state}
+            🐾 {dog.age}lat, {dog.weight}kg, {dog.sex}
           </p>
+          <p className="card-text">{dog.state}</p>
         </div>
       </div>
     </div>

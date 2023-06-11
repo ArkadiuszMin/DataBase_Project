@@ -73,6 +73,9 @@ const AddDogFrom = () => {
   };
 
   const handleSave = (formValues: any) => {
+    if ("" == formValues.description) {
+      delete formValues.description;
+    }
     console.log(formValues);
 
     axios
