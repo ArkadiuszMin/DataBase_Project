@@ -6,10 +6,10 @@ p{
 }
 .allPlace2{height: 80%;
     overflow: auto;
-    width: 100%;
+    width: 1150px;
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-start
+    align-content: flex-start;
 }
 .myRow2{
     display: flex;

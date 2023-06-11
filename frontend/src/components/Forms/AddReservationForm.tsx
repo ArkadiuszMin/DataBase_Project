@@ -116,6 +116,12 @@ const From = ({ dogId }: Props) => {
           </div>
         </div>
 
+        <div className="col-12">
+          <button className="btn btn-secondary myButton" type="submit">
+            wyślij formularz rezerwacyjny
+          </button>
+        </div>
+
         {dogReservationAddFailed && (
           <p style={{ color: "red" }}>
             Nie można dokonać rezerwacji pieska - został już zarezerwowany.
@@ -125,12 +131,6 @@ const From = ({ dogId }: Props) => {
         {!dogReservationAddFailed && formSent && (
           <p style={{ color: "green" }}>Pomyślnie dodano rezerwację!</p>
         )}
-
-        <div className="col-12">
-          <button className="btn btn-secondary myButton" type="submit">
-            wyślij formularz rezerwacyjny
-          </button>
-        </div>
 
         <div className="position-absolute bottom-0 align-right">
           <p style={{ float: "right" }}>

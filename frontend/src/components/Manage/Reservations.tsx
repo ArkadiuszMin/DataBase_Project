@@ -35,14 +35,17 @@ const Reservations = () => {
   return (
     <>
       <h1 className="title title2">Rezerwacje:</h1>
-      <div className="titleRow2">
-        <p className="id">id rezerwacji</p>
-        <p className="adopter">adopter</p>
-        <p className="id">id psa</p>
-        <p className="dog">imię psa</p>
-        <p className="shelter">schronisko</p>
-        <div className="button-wrapper"></div>
-      </div>
+      {reservations.length == 0 && <p>brak rezerwacji do potwierdzenia.</p>}
+      {reservations.length != 0 && (
+        <div className="titleRow2">
+          <p className="id">id rezerwacji</p>
+          <p className="adopter">adopter</p>
+          <p className="id">id psa</p>
+          <p className="dog">imię psa</p>
+          <p className="shelter">schronisko</p>
+          <div className="button-wrapper"></div>
+        </div>
+      )}
       <div className="allPlace2">
         {reservations.map((reservation: Adoption) => (
           <div className="myRow2" key={reservation.adoptionId}>
