@@ -5,7 +5,6 @@ import com.example.springapi.api.model.Address;
 import com.example.springapi.api.model.Shelter;
 import com.example.springapi.api.repository.ShelterRepository;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,7 +37,7 @@ public class ShelterService {
             Address address = new Address(addShelterFormat.getStreet(), addShelterFormat.getPostal());
             Shelter shelter = new Shelter(addShelterFormat.getName(), address);
             shelterRepository.insert(shelter);
-            return new ResponseEntity<>("Shelter added succesfully!", HttpStatus.CREATED);
+            return new ResponseEntity<>("Shelter added successfully!", HttpStatus.CREATED);
         }
     }
 }

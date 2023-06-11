@@ -1,6 +1,7 @@
 package com.example.springapi.service;
 
 import com.example.springapi.api.JsonObjects.AddAdoptionFormat;
+import com.example.springapi.api.JsonObjects.SheltersDataFormat;
 import com.example.springapi.api.enums.State;
 import com.example.springapi.api.model.Adopter;
 import com.example.springapi.api.model.Adoption;
@@ -11,15 +12,12 @@ import com.example.springapi.api.repository.DogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 @AllArgsConstructor
 @Service
@@ -112,6 +110,14 @@ public class AdoptionService {
     }
     public List<Adoption> getAllToConfirm(){
         return adoptionRepository.findAdoptionByState(State.ZAREZERWOWANY);
+    }
+    public SheltersDataFormat getSheltersData(){
+        SheltersDataFormat data = new SheltersDataFormat();
+        int adopted = dogRepository.findDogsByState(State.ZAADOPTOWANY).size();
+        data.setDogCount(dogRepository.findAll().size() - adopted);
+        data.setAdoptedCount(adopted);
+        data.setAdoptersCount(adopterRepository.findAll().size());
+        return data;
     }
 
 }
