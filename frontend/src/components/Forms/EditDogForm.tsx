@@ -6,11 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { string, z } from "zod";
 
-const sexOptions = [
-  { value: "samiec", label: "samiec" },
-  { value: "samica", label: "samica" },
-];
-
 const schema = z.object({
   name: string().min(3, "zbyt krótkie imię"),
   weight: string()
@@ -36,7 +31,7 @@ interface Props {
 const EditDogForm = ({ dog }: Props) => {
   const sexOptions = [
     { value: "samiec", label: "samiec" },
-    { value: "samica", label: "samica" },
+    { value: "samiczka", label: "samiczka" },
   ];
 
   const [shelterOptions, setShelterOptions] = useState<

@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 import "./Manage.Module.css";
 import AddDogForm from "../Forms/AddDogForm";
 import Adopters from "./Adopters";

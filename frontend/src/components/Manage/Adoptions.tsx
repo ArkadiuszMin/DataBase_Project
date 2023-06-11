@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PageLoading from "../Pages/PageLoading";
 
 const Adoptions = () => {
   const [adoptions, setAdoptions] = useState<Adoption[]>([]);
@@ -13,17 +14,21 @@ const Adoptions = () => {
       })
       .catch((error) => {
         console.error(error);
-        // Handle error, set adoptions state to an empty array or display an error message
-        console.log("error!");
       });
   }, []);
 
   return (
     <>
-      <h2>Adoptions</h2>
-      {adoptions.map((adoption: Adoption) => (
-        <p key={adoption.adoptionId}>{adoption.adoptionId}</p>
-      ))}
+      {isLoaded && (
+        <>
+          <h2>Adoptions</h2>
+          {adoptions.length == 0 && <p>brak adopcji.</p>}
+          {adoptions.map((adoption: Adoption) => (
+            <p key={adoption.adoptionId}>{adoption.adoptionId}</p>
+          ))}
+        </>
+      )}
+      {!isLoaded && <PageLoading />}
     </>
   );
 };

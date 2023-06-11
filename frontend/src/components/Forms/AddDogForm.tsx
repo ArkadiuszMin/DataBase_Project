@@ -8,7 +8,7 @@ import { string, z } from "zod";
 
 const sexOptions = [
   { value: "samiec", label: "samiec" },
-  { value: "samica", label: "samica" },
+  { value: "samiczka", label: "samiczka" },
 ];
 
 const schema = z.object({
@@ -73,6 +73,9 @@ const AddDogFrom = () => {
   };
 
   const handleSave = (formValues: any) => {
+    if ("" == formValues.description) {
+      delete formValues.description;
+    }
     console.log(formValues);
 
     axios
