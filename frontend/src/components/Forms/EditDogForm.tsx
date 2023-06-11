@@ -192,7 +192,7 @@ const EditDogForm = ({ dog }: Props) => {
 
         <div className="col-12">
           <button className="btn btn-secondary myButton1" type="submit">
-            dodaj pieska
+            edytuj pieska
           </button>
         </div>
       </form>

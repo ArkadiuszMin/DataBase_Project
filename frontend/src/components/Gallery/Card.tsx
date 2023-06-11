@@ -23,7 +23,7 @@ const AnimalCard = ({ dog }: Props) => {
           <h4 className="card-title">{dog.name}</h4>
           {/* <p className="card-text">🐕 {dog.breed ?? "kundelek"}</p> */}
           <p className="card-text">
-            🐾 {dog.age}lat, {dog.weight}kg, {dog.sex}
+            🐾 {dog.age}lat, {dog.weight}kg, {dog.sex}, {dog.state}
           </p>
         </div>
       </div>

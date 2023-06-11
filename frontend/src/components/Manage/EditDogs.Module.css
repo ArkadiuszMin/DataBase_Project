@@ -1,0 +1,34 @@
+
+.title1{
+    height: 17%;
+}
+.allPlace{
+    height: 86%;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.myRow{
+    display: flex;
+    width: 335px;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 5px;
+    height: 60px;
+}
+.wrapper1{
+    display: flex;
+    align-items: center;
+}
+.myButton1{
+    border-radius: 10px !important;
+    font-size: 18px !important;
+    padding: 10px !important;
+    margin: 5px;
+    margin-top: 5px !important;
+}
+.name-and-id{
+    font-size: 18px;
+}

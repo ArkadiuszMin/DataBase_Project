@@ -1,0 +1,60 @@
+p{
+    padding: 0px;
+}
+.title2{
+    height: 12% !important;
+}
+.allPlace2{
+    height: 80%;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.myRow2{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 4px;
+    height: 60px;
+}
+.myRow2 p{
+    margin-top: 19px;
+    font-size: 16px;
+}
+.titleRow2{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    height: 40px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.8);
+    margin-bottom: 10px;
+}
+.titleRow2 p{
+    font-size: 20px;
+}
+
+.myButton2{
+    border-radius: 10px !important;
+    font-size: 18px !important;
+    padding: 10px !important;
+    margin: 5px;
+    margin-top: 5px !important;
+}
+.id{
+    flex-basis: 20%;
+}
+.adopter{
+    flex-basis: 15%;
+}
+.dog{
+    flex-basis: 10%;
+}
+.shelter{
+    flex-basis: 15%;
+}
+.button-wrapper{
+    flex-basis: 10%;
+}
