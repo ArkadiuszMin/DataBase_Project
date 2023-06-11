@@ -1,29 +1,31 @@
 p{
     padding: 0px;
 }
-.title2{
+.title4{
     height: 12% !important;
 }
-.allPlace2{height: 80%;
+.allPlace4{height: 80%;
     overflow: auto;
-    width: 1050px;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
 }
-.myRow2{
+.myRow4{
     display: flex;
     width: 100%;
     justify-content: space-between;
     flex-direction: row;
     margin-bottom: 4px;
     height: 60px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
 }
-.myRow2 p{
+.myRow4 p{
     margin-top: 19px;
     font-size: 16px;
+    text-align: center
 }
-.titleRow2{
+.titleRow4{
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -31,11 +33,12 @@ p{
     border-bottom: 1px solid rgba(128, 128, 128, 0.8);
     margin-bottom: 10px;
 }
-.titleRow2 p{
+.titleRow4 p{
     font-size: 20px;
+    text-align: center
 }
 
-.myButton2{
+.myButton4{
     border-radius: 10px !important;
     font-size: 18px !important;
     padding: 10px !important;
@@ -46,14 +49,14 @@ p{
     flex-basis: 20%;
 }
 .adopter{
-    flex-basis: 15%;
+    flex-basis: 17%;
 }
 .dog{
     flex-basis: 10%;
 }
 .shelter{
-    flex-basis: 15%;
+    flex-basis: 13%;
 }
-.button-wrapper{
-    flex-basis: 10%;
+.date{
+    flex-basis: 14%;
 }

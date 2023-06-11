@@ -1,10 +1,10 @@
 import { useForm, useController } from "react-hook-form";
-import Select from "react-select";
 import { zodResolver } from "@hookform/resolvers/zod";
 import "./AddReservationForm.Module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { string, z } from "zod";
+import Select from "react-select";
 
 const schema = z.object({
   name: string().min(3, "zbyt krótkie imię"),
@@ -26,12 +26,15 @@ const schema = z.object({
 
 interface Props {
   dog: Dog;
+  onClick: () => void;
 }
 
-const EditDogForm = ({ dog }: Props) => {
+const EditDogForm = ({ dog, onClick }: Props) => {
+  const [dogUpdateFailed, setDogUpdateFailed] = useState(false);
+  const [formSent, setFormSent] = useState(false);
   const sexOptions = [
-    { value: "samiec", label: "samiec" },
-    { value: "samiczka", label: "samiczka" },
+    { value: "SAMIEC", label: "samiec" },
+    { value: "SAMICZKA", label: "samiczka" },
   ];
 
   const [shelterOptions, setShelterOptions] = useState<
@@ -75,12 +78,9 @@ const EditDogForm = ({ dog }: Props) => {
   const { errors } = formState;
 
   const handleSelectChange = (fieldName: string, option: any) => {
-    console.log("selected");
     if (fieldName === "sex") {
-      console.log("sex");
       sexField.onChange(option.value);
     } else if (fieldName === "shelterId") {
-      console.log("shelter");
       shelterIdField.onChange(option.value);
     }
   };
@@ -92,18 +92,21 @@ const EditDogForm = ({ dog }: Props) => {
     axios
       .put("http://localhost:8080/dogs/update", formValues)
       .then((response) => {
-        console.log("RESPONSE: " + response.data);
+        setFormSent(true);
       })
       .catch((error) => {
         console.error(error);
+        setDogUpdateFailed(true);
       });
   };
 
   return (
     <>
       <form className="row g-3" onSubmit={handleSubmit(handleSave)}>
-        <h1 className="title">Formularz edycji psa {dog.name}</h1>
-        <label className="form-label">nadpisz poprzednie dane:</label>
+        <h1 className="title">
+          {"Edytuj psa " + dog.name + " "}
+          <small className="text-secondary faded-text">/{dog.id}</small>
+        </h1>
 
         {/* first row */}
         <div className="col-md-3">
@@ -117,6 +120,7 @@ const EditDogForm = ({ dog }: Props) => {
         <div className="col-md-2">
           <label className="form-label">płeć:</label>
           <Select
+            defaultValue={sexOptions.find(({ value }) => value === dog.sex)}
             value={sexOptions.find(({ value }) => value === sexField.value)}
             onChange={(option) => handleSelectChange("sex", option)}
             options={sexOptions}
@@ -153,7 +157,10 @@ const EditDogForm = ({ dog }: Props) => {
         <div className="col-md-3">
           <label className="form-label">schronisko:</label>
           <Select
-            value={sexOptions.find(
+            defaultValue={shelterOptions.find(
+              ({ value }) => value === dog.shelter.id
+            )}
+            value={shelterOptions.find(
               ({ value }) => value === shelterIdField.value
             )}
             onChange={(option) => handleSelectChange("shelterId", option)}
@@ -186,10 +193,26 @@ const EditDogForm = ({ dog }: Props) => {
         <label className="form-label">* - pole jest opcjonalne.</label>
 
         <div className="col-12">
+          <button className="btn btn-secondary myButton1" onClick={onClick}>
+            powrót do listy psów
+          </button>
+
           <button className="btn btn-secondary myButton1" type="submit">
             edytuj pieska
           </button>
         </div>
+
+        {dogUpdateFailed && (
+          <p style={{ color: "red" }}>
+            Podczas uaktualniania danych wystąpił błąd.
+          </p>
+        )}
+
+        {!dogUpdateFailed && formSent && (
+          <p style={{ color: "green" }}>
+            Pomyślnie zaktualizowano dane pieska.
+          </p>
+        )}
       </form>
     </>
   );
