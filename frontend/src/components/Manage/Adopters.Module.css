@@ -12,12 +12,13 @@
 }
 .titleRow{
     display: flex;
-    width: 100%;
+    width: 99%;
     justify-content: space-between;
     flex-direction: row;
     height: 40px;
     border-bottom: 1px solid rgba(128, 128, 128, 0.8);
     margin-bottom: 10px;
+    margin-right: 300px;
 }
 .titleRow p {
     font-size: 20px;
