@@ -8,3 +8,5 @@ public class AddShelterFormat {
     private String street;
     private String postal;
 }
+
+

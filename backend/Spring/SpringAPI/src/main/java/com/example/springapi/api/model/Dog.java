@@ -19,7 +19,6 @@ public class Dog {
     private String description;
     private String imgSrc;
     private State state;
-
     private Shelter shelter;
 
     public Dog(String name, int weight, Sex sex, int age, String description, String imgSrc, State state, Shelter shelter) {
