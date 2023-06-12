@@ -22,15 +22,13 @@ public class DogController {
     }
 
     @GetMapping("/all")
-    public List<Dog> getAllDogs(){
+    public ResponseEntity<List<Dog>> getAllDogs(){
         return dogService.getAllDogs();
     }
 
     @GetMapping("/byName")
-    public List<Dog> getDogByName(@RequestParam String name){
-        List<Dog> dogs = dogService.getDogByName(name);
-        System.out.println("Dog id: " + dogs.get(0).getId());
-        return dogs;
+    public ResponseEntity<List<Dog>> getDogByName(@RequestParam String name){
+        return dogService.getDogByName(name);
     }
 
     @GetMapping("/byId")
@@ -42,7 +40,6 @@ public class DogController {
     public ResponseEntity<String> addDog(@RequestBody AddDogFormat dogFormat){
          return dogService.addDog(dogFormat);
     }
-
     @PutMapping("/update")
     public ResponseEntity<String> updateDog(@RequestBody AddDogFormat dogFormat){ return dogService.updateDog(dogFormat);}
 
