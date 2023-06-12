@@ -26,72 +26,101 @@ public class AdoptionService {
     private final DogRepository dogRepository;
     private final AdopterRepository adopterRepository;
 
-    public Optional<Adoption> getAdoptionByAdoptionId(String id){
-        return adoptionRepository.findAdoptionByAdoptionId(id);
+    public ResponseEntity<Adoption> getAdoptionByAdoptionId(String id){
+        try{
+            Optional<Adoption> adoption = adoptionRepository.findAdoptionByAdoptionId(id);
+            if(adoption.isEmpty()){
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(adoption.get(),HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public Optional<Adoption> getAdoptionByDogId(String id){
-        return adoptionRepository.findAdoptionByDogId(id);
+    public ResponseEntity<Adoption> getAdoptionByDogId(String id){
+        try{
+            Optional<Adoption> adoption = adoptionRepository.findAdoptionByDogId(id);
+            if(adoption.isEmpty()){
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(adoption.get(),HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public List<Adoption> getAdoptionsByAdopterId(String id){
-        return adoptionRepository.findAdoptionsByAdopterId(id);
+    public ResponseEntity<List<Adoption>> getAdoptionsByAdopterId(String id){
+        try {
+            return new ResponseEntity<>(adoptionRepository.findAdoptionsByAdopterId(id),HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
-    public List<Adoption> getAllAdoptions(){
-        return adoptionRepository.findAll();
+    public ResponseEntity<List<Adoption>> getAllAdoptions(){
+        try {
+            return new ResponseEntity<>(adoptionRepository.findAll(), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     public ResponseEntity<String> addAdoption(AddAdoptionFormat adoption){
+        try {
+            Optional<Dog> _dog = dogRepository.findDogById(adoption.getDogId());
+            if (!_dog.isPresent()) {
+                return new ResponseEntity<>("No dog with given id exists", HttpStatus.BAD_REQUEST);
+            }
+            if (_dog.get().getState() != State.NIEZAREZERWOWANY) {
+                return new ResponseEntity<>("Dog already reserved", HttpStatus.BAD_REQUEST);
+            }
 
-        Optional<Dog> _dog = dogRepository.findDogById(adoption.getDogId());
-        if(!_dog.isPresent()){
-            return new ResponseEntity<>("No dog with given id exists", HttpStatus.BAD_REQUEST);
+            if (adoption.getFirstName() == null || adoption.getSecondName() == null) {
+                return new ResponseEntity<>("No first name or second name provided", HttpStatus.BAD_REQUEST);
+            }
+            if (adoption.getPhone() == null || adoption.getEmail() == null) {
+                return new ResponseEntity<>("No phone number or email provided", HttpStatus.BAD_REQUEST);
+            }
+            if (adoption.getCity() == null || adoption.getPostalCode() == null || adoption.getStreet() == null) {
+                return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
+            }
+
+            Adopter newAdopter = new Adopter(
+                    adoption.getFirstName(),
+                    adoption.getSecondName(),
+                    adoption.getPhone(),
+                    adoption.getEmail(),
+                    adoption.getStreet(),
+                    adoption.getPostalCode(),
+                    adoption.getCity());
+
+            //check if adopter already exists
+            ExampleMatcher matcher = ExampleMatcher.matchingAll()
+                    .withIgnoreNullValues()
+                    .withIgnorePaths("_id");
+
+            Example<Adopter> example = Example.of(newAdopter, matcher);
+            Optional<Adopter> foundAdopter = adopterRepository.findOne(example);
+
+            Adopter adopter;
+            if (foundAdopter.isPresent()) {
+                adopter = foundAdopter.get();
+            } else {
+                adopter = newAdopter;
+                adopterRepository.insert(adopter);
+            }
+
+            Dog dog = _dog.get();
+            Adoption newAdoption = new Adoption(adopter, dog);
+            adoptionRepository.insert(newAdoption);
+            dog.setState(State.ZAREZERWOWANY);
+            dogRepository.save(dog);
+
+            return new ResponseEntity<>("Successfully added new adoption", HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if(_dog.get().getState()!=State.NIEZAREZERWOWANY){
-            return new ResponseEntity<>("Dog already reserved", HttpStatus.BAD_REQUEST);
-        }
-
-        if(adoption.getFirstName() == null || adoption.getSecondName() == null){
-            return new ResponseEntity<>("No first name or second name provided", HttpStatus.BAD_REQUEST);
-        }
-        if(adoption.getPhone() == null || adoption.getEmail() == null){
-            return new ResponseEntity<>("No phone number or email provided", HttpStatus.BAD_REQUEST);
-        }
-        if(adoption.getCity() == null || adoption.getPostalCode() == null || adoption.getStreet() == null){
-            return new ResponseEntity<>("No valid address provided", HttpStatus.BAD_REQUEST);
-        }
-
-        Adopter newAdopter = new Adopter(
-                adoption.getFirstName(),
-                adoption.getSecondName(),
-                adoption.getPhone(),
-                adoption.getEmail(),
-                adoption.getStreet(),
-                adoption.getPostalCode(),
-                adoption.getCity());
-
-        //check if adopter already exists
-        ExampleMatcher matcher = ExampleMatcher.matchingAll()
-                .withIgnoreNullValues()
-                .withIgnorePaths("_id");
-
-        Example<Adopter> example = Example.of(newAdopter, matcher);
-        Optional<Adopter> foundAdopter = adopterRepository.findOne(example);
-
-        Adopter adopter;
-        if(foundAdopter.isPresent()){
-            adopter = foundAdopter.get();
-        }else{
-            adopter = newAdopter;
-            adopterRepository.insert(adopter);
-        }
-
-        Dog dog = _dog.get();
-        Adoption newAdoption = new Adoption(adopter,dog);
-        adoptionRepository.insert(newAdoption);
-        dog.setState(State.ZAREZERWOWANY);
-        dogRepository.save(dog);
-
-        return new ResponseEntity<>("Successfully added new adoption",HttpStatus.CREATED);
     }
     public ResponseEntity<String> confirmAdoption(String adoptionId){
+        try{
         Optional<Adoption> adoption = adoptionRepository.findById(adoptionId);
         if(!adoption.isPresent()){
             return new ResponseEntity<>("No adoption with given id exists", HttpStatus.BAD_REQUEST);
@@ -105,19 +134,29 @@ public class AdoptionService {
         dog.setState(State.ZAADOPTOWANY);
         adoptionRepository.save(adoption.get());
         dogRepository.save(dog);
-
         return new ResponseEntity<>("Successfully updated adoption status", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public List<Adoption> getAllToConfirm(){
-        return adoptionRepository.findAdoptionByState(State.ZAREZERWOWANY);
+    public ResponseEntity<List<Adoption>> getAllToConfirm(){
+        try {
+            return new ResponseEntity<>(adoptionRepository.findAdoptionByState(State.ZAREZERWOWANY), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-    public SheltersDataFormat getSheltersData(){
-        SheltersDataFormat data = new SheltersDataFormat();
-        int adopted = dogRepository.findDogsByState(State.ZAADOPTOWANY).size();
-        data.setDogCount(dogRepository.findAll().size() - adopted);
-        data.setAdoptedCount(adopted);
-        data.setAdoptersCount(adopterRepository.findAll().size());
-        return data;
+    public ResponseEntity<SheltersDataFormat> getSheltersData(){
+        try {
+            SheltersDataFormat data = new SheltersDataFormat();
+            int adopted = dogRepository.findDogsByState(State.ZAADOPTOWANY).size();
+            data.setDogCount(dogRepository.findAll().size() - adopted);
+            data.setAdoptedCount(adopted);
+            data.setAdoptersCount(adopterRepository.findAll().size());
+            return new ResponseEntity<>(data,HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
