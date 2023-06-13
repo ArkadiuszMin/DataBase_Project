@@ -126,6 +126,10 @@ public class DogService {
 
     public ResponseEntity<String> deleteDog(String Id){
         try{
+            Optional<Dog> dog = dogRepository.findDogById(Id);
+            if (dog.isEmpty()){
+                return new ResponseEntity<>("No dog with provided ID in database", HttpStatus.NOT_FOUND);
+            }
             dogRepository.deleteById(Id);
             return new ResponseEntity<>("Succesfully deleted a dog", HttpStatus.OK);
         }catch (Exception e){
