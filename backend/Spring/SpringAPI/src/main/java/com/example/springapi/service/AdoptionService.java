@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -131,6 +132,7 @@ public class AdoptionService {
 
         Dog dog = adoption.get().getDog();
         adoption.get().setState(State.ZAADOPTOWANY);
+        adoption.get().setDateConfirmation(LocalDate.now());
         dog.setState(State.ZAADOPTOWANY);
         adoptionRepository.save(adoption.get());
         dogRepository.save(dog);
