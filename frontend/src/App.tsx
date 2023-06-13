@@ -10,7 +10,6 @@ function App() {
   const navbarTitles: NavbarItems[] = [
     { name: "home", route: "/" },
     { name: "nasze psiaki", route: "/dogs" },
-    { name: "kontakt", route: "/contact" },
     { name: "zarządzaj", route: "/manage" },
   ];
 

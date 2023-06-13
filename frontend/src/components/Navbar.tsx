@@ -9,8 +9,6 @@ interface Props {
   title: string;
 }
 
-// TODO: active stays -> compare location or
-
 const Navbar = ({ items, rightText, title }: Props) => {
   return (
     <nav

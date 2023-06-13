@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AnimalsGallery from "./Gallery/Gallery";
 import AnimalDetails from "./Gallery/Details";
 import Home from "./Pages/Home";
-import Contact from "./Pages/Contact";
 import Manage from "./Manage/Manage";
 
 const MyRoutes = () => {
@@ -15,7 +14,6 @@ const MyRoutes = () => {
           <Route index element={<AnimalDetails />}></Route>
           <Route path=":dogId" element={<AnimalDetails />}></Route>
         </Route>
-        <Route path="/contact" element={<Contact />}></Route>
         <Route path="/manage" element={<Manage />}></Route>
       </Routes>
     </BrowserRouter>

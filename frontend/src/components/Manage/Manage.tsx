@@ -48,7 +48,6 @@ const ManagePage = () => {
               aria-current="true"
               onClick={() => {
                 setActiveTab(tab.name);
-                console.log(activeTab);
               }}
               key={index}
             >

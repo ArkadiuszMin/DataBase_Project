@@ -9,7 +9,7 @@ const Adoptions = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/adoptions/all")
+      .get("http://localhost:8080/adoptions/allAdopted")
       .then((response) => {
         setAdoptions(response.data), setIsLoaded(true);
       })
