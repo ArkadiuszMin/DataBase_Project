@@ -123,4 +123,13 @@ public class DogService {
         }
 
     }
+
+    public ResponseEntity<String> deleteDog(String Id){
+        try{
+            dogRepository.deleteById(Id);
+            return new ResponseEntity<>("Succesfully deleted a dog", HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

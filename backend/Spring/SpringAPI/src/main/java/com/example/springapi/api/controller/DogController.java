@@ -43,5 +43,10 @@ public class DogController {
     @PutMapping("/update")
     public ResponseEntity<String> updateDog(@RequestBody AddDogFormat dogFormat){ return dogService.updateDog(dogFormat);}
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteDog(@RequestParam String id){
+        return dogService.deleteDog(id);
+    }
+
 
 }
