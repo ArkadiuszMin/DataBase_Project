@@ -25,23 +25,10 @@ public class AdopterController {
     }
     @GetMapping("/all")
     public ResponseEntity<List<Adopter>> getAllAdopters(){
-        try{
-            return new ResponseEntity<>(adopterService.getAllAdopters(), HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-
-        }
+        return adopterService.getAllAdopters();
     }
     @GetMapping("/byId")
     public ResponseEntity<Adopter> getAdopterById(@RequestParam String id){
-        try{
-            Optional<Adopter> adopter = adopterService.getAdopterById(id);
-            if(adopter.isEmpty()){
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(adopter.get(),HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return adopterService.getAdopterById(id);
     }
 }
