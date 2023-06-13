@@ -6,7 +6,7 @@
 - Oliwia Radoła
 
 ## Opis:
-Aplikacja internetowa pozwalająca na rezerwacje psa ze schroniska. Dotatkowo zawiera tryb zarządzania przeznoaczonego dla osoby zarządzającem schroniskiem pozwalający na edycje, dodawanie danych i przeprowadzanie procesu adopcyjnego.
+Aplikacja internetowa pozwalająca na rezerwacje psa ze schroniska. Dodatkowo zawiera tryb zarządzania przeznaczony dla osobób zarządzających schroniskiem pozwalający na edycje, dodawanie danych i przeprowadzenie procesu adopcyjnego.
 
 ## Technologie:
 - Frontend: React 
