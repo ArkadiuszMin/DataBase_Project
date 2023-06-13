@@ -4,7 +4,8 @@ p{
 .title4{
     height: 12% !important;
 }
-.allPlace4{height: 80%;
+.allPlace4{
+    height: 80%;
     overflow: auto;
     width: 100%;
     display: flex;
