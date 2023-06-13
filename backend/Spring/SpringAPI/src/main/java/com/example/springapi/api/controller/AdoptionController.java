@@ -51,6 +51,10 @@ public class AdoptionController {
     public ResponseEntity<List<Adoption>>  getAllToConfirm(){
         return  adoptionService.getAllToConfirm();
     }
+    @GetMapping("/allAdopted")
+    public ResponseEntity<List<Adoption>>  getAllAdopted(){
+        return  adoptionService.getAllAdopted();
+    }
     @GetMapping("/data")
     public ResponseEntity<SheltersDataFormat> getShelterData(){
         return adoptionService.getSheltersData();

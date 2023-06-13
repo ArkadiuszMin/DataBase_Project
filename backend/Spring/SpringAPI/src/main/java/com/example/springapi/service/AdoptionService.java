@@ -146,6 +146,13 @@ public class AdoptionService {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<List<Adoption>> getAllAdopted(){
+        try {
+            return new ResponseEntity<>(adoptionRepository.findAdoptionByState(State.ZAADOPTOWANY), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     public ResponseEntity<SheltersDataFormat> getSheltersData(){
         try {
             SheltersDataFormat data = new SheltersDataFormat();
